@@ -4,16 +4,16 @@ import styles from '../styles/Home.module.css';
 
 export default function Home() {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
+        <div>
             <Head>
                 <title>Login</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <main className={styles.main}>
-                <div className="bg-white">
+                <div>
                     <div>
-                        <h2>Sign Up</h2>
+                        <h2>Sign Up an Account</h2>
                         <div>
                             <input type="username" name="username" placeholder="username" />
                         </div>
