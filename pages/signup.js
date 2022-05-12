@@ -4,11 +4,11 @@ import styles from '../styles/Home.module.css';
 
 export default function Home() {
     return (
-        <div>
+        <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <Head>
-                <title>Login</title>
+                <title>Sign Up</title>
                 <link rel="icon" href="/favicon.ico" />
-            </Head>
+            </Head>>
 
             <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
                 <div className="bg-white rounded-2xl shadow-2xl flex max-w-4xl">
