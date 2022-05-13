@@ -9,7 +9,7 @@ export default function SignIn() {
     const submit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('http://host-1906285516-port-55516.proxy.infralabs.cs.ui.ac.id/auth-service/logout', {
+        const response = await fetch('https://auth-law-a1.herokuapp.com/logout', {
           method: 'POST',
           credentials : 'include',
           headers: {'Content-Type': 'application/json'},

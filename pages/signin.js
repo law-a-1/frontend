@@ -25,14 +25,14 @@ export default function SignIn() {
     };
 
     const handleSignUp = event => {
-        router.push('http://localhost:3000/signup')
+        router.push('https://law-a-1.netlify.app/signup')
     }
 
 
     const submit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('http://host-1906285516-port-55516.proxy.infralabs.cs.ui.ac.id/auth-service/login', {
+        const response = await fetch('https://auth-law-a1.herokuapp.com/login', {
           method: 'POST',
           credentials : 'include',
           headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ export default function SignIn() {
         })
       }).then((response) => {
         console.log(response)
-        if(response.ok){router.push('/logout')
+        if(response.ok){router.push('https://law-a-1.netlify.app/logout')
       } else {
         if(data.username==''){
           alert("Please enter a username!")

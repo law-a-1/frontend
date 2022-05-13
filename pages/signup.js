@@ -40,7 +40,7 @@ export default function SignUp() {
             alert("Password and Confirmation Password didn't match")
         } else {
      
-        const response = await fetch('http://host-1906285516-port-55516.proxy.infralabs.cs.ui.ac.id/auth-service/register', {
+        const response = await fetch('https://auth-law-a1.herokuapp.com/register', {
           method: 'POST',
           credentials : 'include',
           headers: {'Content-Type': 'application/json'},
@@ -52,7 +52,7 @@ export default function SignUp() {
         }).then((response) => {
             console.log(response)
             if(response.ok){ 
-                router.push('/logout')
+                router.push('https://law-a-1.netlify.app/logout')
             } else {
                 if(data.username.length<5){
                     alert("Username must contain atleast 5 characters")
