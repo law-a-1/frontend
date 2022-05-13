@@ -56,7 +56,7 @@
 .modify {
   display: flex;
   gap: 5rem;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 @media (max-width: 600px) {
