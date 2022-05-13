@@ -81,7 +81,6 @@ export default function SignUp() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <Head>
-                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
                 <title>Sign Up</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>

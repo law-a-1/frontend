@@ -30,7 +30,6 @@ export default function SignIn() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <Head>
-                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
                 <title>Login</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
