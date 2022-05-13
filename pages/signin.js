@@ -62,28 +62,28 @@ export default function SignIn() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
+        <div classNameName="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <Head>
                 <title>Login</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-                <div className="bg-white rounded-2xl shadow-2xl flex max-w-4xl">
-                    <div className="p-10"> 
-                        <div className="py-10">
-                            <h2 className="text-3xl font-bold text-black-500 mb-2">Sign in to Account</h2>
-                            <div className="border-2 w-10 border-black-500 inline-block mb-2"></div>
+            <main classNameName="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+                <div classNameName="bg-white rounded-2xl shadow-2xl flex max-w-4xl">
+                    <div classNameName="p-10"> 
+                        <div classNameName="py-10">
+                            <h2 classNameName="text-3xl font-bold text-black-500 mb-2">Sign in to Account</h2>
+                            <div classNameName="border-2 w-10 border-black-500 inline-block mb-2"></div>
                         </div>
                         <form method='post'>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                            <input onChange={handleInputUsername} type="username" name="username" placeholder="username" className="bg-gray-100 outline-none text-sm flex-1" />
+                        <div classNameName="bg-gray-100 w-64 p-2 flex items-center mb-3">
+                            <input onChange={handleInputUsername} type="username" name="username" placeholder="username" classNameName="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
-                        <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                            <input onChange={handleInputPassword} type="password" name="password" placeholder="password" className="bg-gray-100 outline-none text-sm flex-1" />
+                        <div classNameName="bg-gray-100 w-64 p-2 flex items-center mb-3">
+                            <input onChange={handleInputPassword} type="password" name="password" placeholder="password" classNameName="bg-gray-100 outline-none text-sm flex-1" />
                         </div>
                         <div>
-                            <button onClick={submit} className="border-2 border-black-500 rounded-full px-12 py-2 inline-block font-semibold hover:bg-white mb-3">Sign In</button>
+                            <button onClick={submit} classNameName="border-2 border-black-500 rounded-full px-12 py-2 inline-block font-semibold hover:bg-white mb-3">Sign In</button>
                         </div>
                         </form>
                         <p>No Account? <a onClick={handleSignUp}>Create One</a> </p> 

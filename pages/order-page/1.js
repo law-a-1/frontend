@@ -20,29 +20,29 @@ const myLoader = ({ src, width, quality }) => {
 function one(){
     return(
         <main>
-            <div class ="container">
+            <div className ="container">
             <Link href="/order">
                         <a> Back to before</a>
             </Link>
-                <div class="row">
-                    <div class="col">
-                        <h1 class="text-center">Order 23412</h1>
-                        <h5 class="text-center"> Jonathan Doe :johndoe@test.com</h5>
-                        <h5 class="text-center"> <b>Status : Waiting</b> </h5>
-                        <h5 class="text-center"> <b>Order Total</b> : Rp.150.000</h5>
-                    <div class="card" styles="width: 18rem;">
-                    <div class="card-body">
+                <div className="row">
+                    <div className="col">
+                        <h1 className="text-center">Order 23412</h1>
+                        <h5 className="text-center"> Jonathan Doe :johndoe@test.com</h5>
+                        <h5 className="text-center"> <b>Status : Waiting</b> </h5>
+                        <h5 className="text-center"> <b>Order Total</b> : Rp.150.000</h5>
+                    <div className="card" styles="width: 18rem;">
+                    <div className="card-body">
                         <MyImage />
-                        <h5 class="card-title">Sepatu Merah Nike</h5>
-                        <p class="card-text">Jumlah : 1</p>
-                        <p class="card-text"> Harga : Rp.250.000</p>
+                        <h5 className="card-title">Sepatu Merah Nike</h5>
+                        <p className="card-text">Jumlah : 1</p>
+                        <p className="card-text"> Harga : Rp.250.000</p>
                     </div>
                 </div>
                     </div>
-                    <p class="card-text text-center">Change Status</p>
-                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-primary">Waiting</button>
-                      <button type="button" class="btn btn-outline-primary">Rejected</button>
+                    <p className="card-text text-center">Change Status</p>
+                    <div className="btn-group" role="group" aria-label="Basic outlined example">
+                        <button type="button" className="btn btn-outline-primary">Waiting</button>
+                      <button type="button" className="btn btn-outline-primary">Rejected</button>
                     </div>
                 </div>
             </div>

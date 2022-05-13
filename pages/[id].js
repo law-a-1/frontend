@@ -22,7 +22,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className={styles.container}>
+    <div classNameName={styles.container}>
       <Head>
         <title>Gelas Ajaib</title>
         <meta
@@ -32,8 +32,8 @@ export default function ProductDetail() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <div className={styles.left}>
+      <main classNameName={styles.main}>
+        <div classNameName={styles.left}>
           <Image
             src={glassPic}
             alt="Gambar dari Gelas Ajaib"
@@ -47,16 +47,16 @@ export default function ProductDetail() {
           </video>
         </div>
 
-        <div className={styles.middle}>
+        <div classNameName={styles.middle}>
           <h2>Gelas ajaib</h2>
           <p>Rp{formatter.format(999999999)}</p>
 
           <p>Gelas ajaib buatan Jin dari Barat Daya</p>
         </div>
 
-        <div className={styles.right}>
-          <div className={styles.productNumber}>
-            <div className={styles.total}>
+        <div classNameName={styles.right}>
+          <div classNameName={styles.productNumber}>
+            <div classNameName={styles.total}>
               <button onClick={() => changeProductNumber("decrease")}>-</button>
               <p>{productNumber}</p>
               <button onClick={() => changeProductNumber("increase")}>+</button>
@@ -64,7 +64,7 @@ export default function ProductDetail() {
             <p>Stock: 25</p>
           </div>
 
-          <div className={styles.subtotal}>
+          <div classNameName={styles.subtotal}>
             <p>Subtotal</p>
             <p>Rp{subtotal}</p>
           </div>
