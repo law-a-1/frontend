@@ -41,11 +41,7 @@ export default function Home() {
                   </Link>
                 </button>
 
-                <button>
-                  <Link href={"/delete-product"}>
-                    <a>Delete</a>
-                  </Link>
-                </button>
+                <button>Delete</button>
               </div>
             </div>
           ))}
