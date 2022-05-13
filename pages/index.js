@@ -11,17 +11,17 @@ const formatter = new Intl.NumberFormat("id-ID", {
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div classNameName={styles.container}>
       <Head>
         <title>Home</title>
         <meta name="description" content="Homepage" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <div className={styles.grid}>
+      <main classNameName={styles.main}>
+        <div classNameName={styles.grid}>
           {[1, 2, 3, 4, 5, 6].map((e) => (
-            <div className={styles.card} key={e}>
+            <div classNameName={styles.card} key={e}>
               <Link href={`${e}`}>
                 <a>
                   <Image
@@ -34,7 +34,7 @@ export default function Home() {
                   <p>Rp{formatter.format(999999999)}</p>
                 </a>
               </Link>
-              <div className={styles.modify}>
+              <div classNameName={styles.modify}>
                 <button>
                   <Link href={"/update-product"}>
                     <a>Update</a>
@@ -46,7 +46,7 @@ export default function Home() {
             </div>
           ))}
 
-          <div className={styles.card} style={{ textAlign: "center" }}>
+          <div classNameName={styles.card} style={{ textAlign: "center" }}>
             <Link href="/add-product">
               <a>Add product</a>
             </Link>
