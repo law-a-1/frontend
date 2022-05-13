@@ -1,0 +1,29 @@
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.left {
+  order: 1;
+}
+
+.middle {
+  order: 2;
+}
+
+.middle h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.right {
+  order: 3;
+}
