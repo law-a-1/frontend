@@ -25,7 +25,7 @@ export default function SignIn() {
     };
 
     const handleSignUp = event => {
-        router.push('http://localhost:3000/signup')
+        router.push('https://law-a-1.netlify.app/signup')
     }
 
 
@@ -43,7 +43,7 @@ export default function SignIn() {
         })
       }).then((response) => {
         console.log(response)
-        if(response.ok){router.push('/logout')
+        if(response.ok){router.push('https://law-a-1.netlify.app/logout')
       } else {
         if(data.username==''){
           alert("Please enter a username!")
@@ -64,6 +64,7 @@ export default function SignIn() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <Head>
+                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
                 <title>Login</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>

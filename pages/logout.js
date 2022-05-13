@@ -9,7 +9,7 @@ export default function SignIn() {
     const submit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('http://host-1906285516-port-55516.proxy.infralabs.cs.ui.ac.id/auth-service/logout', {
+        const response = await fetch('https://auth-law-a1.herokuapp.com/logout', {
           method: 'POST',
           credentials : 'include',
           headers: {'Content-Type': 'application/json'},
@@ -30,6 +30,7 @@ export default function SignIn() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <Head>
+                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
                 <title>Login</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
