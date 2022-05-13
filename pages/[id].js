@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../styles/ProductDetail.module.css";
 import Image from "next/image";
 import glassPic from "../public/glass.jpeg";
+import { useState } from "react";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
@@ -9,6 +10,17 @@ const formatter = new Intl.NumberFormat("id-ID", {
 });
 
 export default function ProductDetail() {
+  const [productNumber, setProductNumber] = useState(0);
+  const [subtotal, setSubtotal] = useState(1000);
+
+  const changeProductNumber = (key) => {
+    if (key == "increase") {
+      setProductNumber(productNumber++);
+    } else if (key == "decrease" && productNumber != 0) {
+      setProductNumber(productNumber--);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -43,10 +55,20 @@ export default function ProductDetail() {
         </div>
 
         <div className={styles.right}>
-          <h2>Atur jumlah dan catatan</h2>
-          <p>
-            <span>Stok 25</span>
-          </p>
+          <div className={styles.productNumber}>
+            <div className={styles.total}>
+              <button onClick={() => changeProductNumber("decrease")}>-</button>
+              <p>{productNumber}</p>
+              <button onClick={() => changeProductNumber("increase")}>+</button>
+            </div>
+            <p>Stock: 25</p>
+          </div>
+
+          <div className={styles.subtotal}>
+            <p>Subtotal</p>
+            <p>Rp{subtotal}</p>
+          </div>
+          <button>Add to Cart</button>
         </div>
       </main>
     </div>
