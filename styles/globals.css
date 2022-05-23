@@ -18,3 +18,41 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1em 8vw;
+}
+
+.page-header {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.table-header {
+  background: #E8E8E8;
+}
+
+.log-table {
+  border-radius: 8px;
+  border-collapse: collapse;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+}
+
+.log-table td {
+  padding: 0.5em 1em;
+}
+
+thead tr {
+  font-weight: bold;
+}
+
+tbody tr {
+  border: #E8E8E8 1px solid;
+}
+
+.log-message {
+  text-overflow: ellipsis;
+}
