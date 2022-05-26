@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { LogsAPI } from '../api/endpoints/logs'
 import { LogItem } from '../components/LogPage/LogItem'
+import { Pagination } from '../components/LogPage/Pagination'
+import { FilterForm } from '../components/LogPage/FilterForm'
 
 export const Logs = () => {
   const [logs, setLogs] = useState()
@@ -22,9 +23,14 @@ export const Logs = () => {
     fetchData()
   }, [query])
 
+  const handleSubmit = (filters) => {
+    setQuery({...query, ...filters})
+  }
+
   return logs && (
     <div className='page-container'>
         <h1 className='page-header'>Logs</h1>
+        <FilterForm handleSubmit={handleSubmit}/>
         <table className='log-table'>
             <thead className='table-header'>
                 <tr>
@@ -41,25 +47,7 @@ export const Logs = () => {
             </tbody>
         </table>
         <div className='pagination-container'>
-          <div className="pagination">
-            <FaChevronLeft 
-              size={15}
-              onClick={() => changePage(query.page - 1)} 
-              style={{ 
-                visibility: (query.page > 1) ? 'visible' : 'hidden', 
-                cursor: 'pointer'
-              }} 
-            />
-            <span>{`Page ${query.page} of ${logs.pages}`}</span>
-            <FaChevronRight 
-              size={15} 
-              onClick={() => changePage(query.page + 1)} 
-              style={{ 
-                visibility: (query.page < logs.pages) ? 'visible' : 'hidden',
-                cursor: 'pointer'
-              }}
-            /> 
-          </div>        
+          <Pagination page={query.page} pages={logs.pages} changePage={changePage}/>
         </div>
     </div>
   )
