@@ -1,5 +1,5 @@
 
-const BASE_URL = 'http://localhost:2323' || process.env.NEXT_PUBLIC_LOG_SERVICE_BASE_URL
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_LOG_SERVICE || 'http://localhost:2323'
 
 export const LogsAPI = {
     getLogs : async (queryParams) => {
