@@ -107,3 +107,21 @@ tbody tr {
   justify-content: space-between;
   align-items: center;
 }
+
+.pagination-container {
+  padding-top: .75em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.pagination {
+  display: flex;
+  align-items: center;
+  column-gap: 1em;
+}
+
+.pagination span {
+  margin: 0;
+  vertical-align: middle;
+}
