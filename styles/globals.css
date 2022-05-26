@@ -55,4 +55,55 @@ tbody tr {
 
 .log-message {
   text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.modalBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  background: rgba(0,0,0,0.05);
+}
+
+.log-detail {
+  max-width: 80vw;
+  padding: 1em;
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  min-width: 20em;
+  z-index: 11;
+}
+
+.log-detail-table {
+  border: none;
+}
+
+.log-detail-tr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.log-detail-message {
+  background: #f6f6f6;
+  padding: 0.5em;
+  border-radius: 4px;
+  border: 1px solid rgb(209, 208, 208);
+}
+
+.log-detail-message code {
+  color: #000;
+}
+
+.log-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

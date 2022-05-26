@@ -1,26 +1,28 @@
-import React from 'react'
-
-function formatDate(datestring) {
-    return new Date(datestring).toLocaleString()
-}
-
-const LogLevelColors = {
-    DEBUG: '#53BD97',
-    INFO: '#31B4D1',
-    ERROR: '#F87575',
-}
-
-function formatColor(level) {
-    return LogLevelColors[level] || '#000000'
-}
+import { useState } from "react";
+import LogDetail from './LogDetail'
+import { formatColor, formatDate } from "../../util/formatting";
 
 export const LogItem = ({ log }) => {
+  const [showDetail, setShowDetail] = useState(false);
   return (
-    <tr>
+    <>
+      <tr>
         <td>{formatDate(log.created_at)}</td>
-        <td style={{ color: formatColor(log.type)}}>{log.type}</td>
+        <td style={{ color: formatColor(log.type) }}>{log.type}</td>
         <td>{log.service}</td>
-        <td className='log-message'>{log.message}</td>
-    </tr>
-  )
-}
+        <td className='log-message' onClick={() => setShowDetail(true)}>
+          {log.message}
+        </td>
+        { showDetail &&
+          <td className="log-detail-td" style={{ padding: 0,
+          }}>
+            <LogDetail log={log} handleClose={() => setShowDetail(false)}/>
+          </td>
+        }
+      </tr>
+    </>
+  );
+};
+// 
+// 
+// 
