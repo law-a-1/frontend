@@ -3,13 +3,56 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import glassPic from "../public/glass.jpeg";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Router from "next/router";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
   minimumFractionDigits: 0,
 });
 
+const productClient = axios.create({
+  baseURL: "http://localhost:8080/products",
+  headers: {
+    Authorization:
+      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjksImV4cCI6MTY1MzYzMTM2OCwiaWF0IjoxNjUzNjI3NzY4fQ.8EdyUGrBYtfBFbtJ5HbsRIOHh8dP460qNd4K2OUr52Y",
+  },
+});
+
+const deleteProduct = (id) => {
+  productClient
+    .delete(`/${id}`)
+    .then(function (res) {
+      if (res.status >= 300) {
+        alert(res.data.message);
+      }
+      console.log(res);
+
+      Router.reload(window.location.pathname);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+};
+
 export default function Home() {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    productClient
+      .get("/")
+      .then(function (res) {
+        if (res.status >= 300) {
+          alert(res.data.message);
+        }
+        setProducts(res.data.products);
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,18 +63,18 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.grid}>
-          {[1, 2, 3, 4, 5, 6].map((e) => (
-            <div className={styles.card} key={e}>
-              <Link href={`${e}`}>
+          {products.map((product) => (
+            <div className={styles.card} key={product.id}>
+              <Link href={`${product.id}`}>
                 <a>
                   <Image
                     src={glassPic}
-                    alt="Gambar dari Gelas Ajaib"
+                    alt={`Gambar dari {product.name}`}
                     width={300}
                     height={300}
                   />
-                  <h2>Gelas Ajaib</h2>
-                  <p>Rp{formatter.format(999999999)}</p>
+                  <h2>{product.name}</h2>
+                  <p>Rp{formatter.format(product.price)}</p>
                 </a>
               </Link>
               <div className={styles.modify}>
@@ -41,7 +84,9 @@ export default function Home() {
                   </Link>
                 </button>
 
-                <button>Delete</button>
+                <button onClick={() => deleteProduct(product.id)}>
+                  Delete
+                </button>
               </div>
             </div>
           ))}

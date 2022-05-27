@@ -2,14 +2,28 @@ import Head from "next/head";
 import styles from "../styles/ProductDetail.module.css";
 import Image from "next/image";
 import glassPic from "../public/glass.jpeg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
   minimumFractionDigits: 0,
 });
 
+const productClient = axios.create({
+  baseURL: "http://localhost:8080/products",
+  headers: {
+    Authorization:
+      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjksImV4cCI6MTY1MzYyNDkzNywiaWF0IjoxNjUzNjIxMzM3fQ.bQ_Kc7D1WJgxsX5A3h7O2Y1aKWBIdf0dkVllDDlFGa4",
+  },
+});
+
 export default function ProductDetail() {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [product, setProduct] = useState({});
   const [productNumber, setProductNumber] = useState(0);
   const [subtotal, setSubtotal] = useState(1000);
 
@@ -21,10 +35,25 @@ export default function ProductDetail() {
     }
   };
 
+  useEffect(() => {
+    productClient
+      .get(`/${id}`)
+      .then(function (res) {
+        if (res.status >= 300) {
+          alert(res.data.message);
+        }
+        setProduct(res.data);
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [id]);
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Gelas Ajaib</title>
+        <title>{product.name}</title>
         <meta
           name="description"
           content="Gelas ajaib buatan Jin dari Barat Daya"
@@ -48,10 +77,10 @@ export default function ProductDetail() {
         </div>
 
         <div className={styles.middle}>
-          <h2>Gelas ajaib</h2>
-          <p>Rp{formatter.format(999999999)}</p>
+          <h2>{product.name}</h2>
+          <p>Rp{formatter.format(product.price)}</p>
 
-          <p>Gelas ajaib buatan Jin dari Barat Daya</p>
+          <p>{product.description}</p>
         </div>
 
         <div className={styles.right}>
@@ -61,7 +90,7 @@ export default function ProductDetail() {
               <p>{productNumber}</p>
               <button onClick={() => changeProductNumber("increase")}>+</button>
             </div>
-            <p>Stock: 25</p>
+            <p>Stock: {product.stock}</p>
           </div>
 
           <div className={styles.subtotal}>
