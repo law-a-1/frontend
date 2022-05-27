@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Head  from "next/head";
 import { useRouter } from 'next/router'
+import { saveJwt } from '../util/localStorage'
 
 export default function SignIn() {
     const router = useRouter()
@@ -24,10 +25,9 @@ export default function SignIn() {
         });
     };
 
-    const handleSignUp = event => {
-        router.push('https://law-a-1.netlify.app/signup')
+    const handleSignUp = () => {
+        router.push('/')
     }
-
 
     const submit = async (e) => {
         e.preventDefault();
@@ -43,8 +43,13 @@ export default function SignIn() {
         })
       }).then((response) => {
         console.log(response)
-        if(response.ok){router.push('https://law-a-1.netlify.app/logout')
-      } else {
+        if(response.ok){
+            response.json().then(data => {
+                saveJwt(data?.jwt)
+                console.log(data?.jwt)
+            })
+            router.push('/')
+        } else {
         if(data.username==''){
           alert("Please enter a username!")
         } 
