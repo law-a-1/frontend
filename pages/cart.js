@@ -4,10 +4,12 @@ import styles from '../styles/cart.module.css'
 import ItemCard from '../components/CheckoutComponents/itemCard'
 import { getJWt } from '../util/localStorage'
 import React, {useEffect, useState} from 'react';
+import SignIn from './signin'
 
 
 function Cart() {
     const [data, setData] = useState()
+    const [username, setUsername] = useState()
     const [grandTotal, setGrandTotal] = useState(0)
     const [token, _setToken] = useState(getJWt())
 
@@ -15,16 +17,26 @@ function Cart() {
         console.log("FETCHING DATA...")
         const result = await fetch('http://localhost:8000/checkout/cart/', {
             method: 'GET',
-            headers: {'Authorization' : token}
-            // Cara dapet tokennya gimana?
+            headers: {'Authorization' : `Bearer ${token}`}
         })
         const result_data = await result.json()
         setData(result_data)
-        
+
+        // const user = await fetch('https://auth-law-a1.herokuapp.com/user', {
+        //     method: 'GET',
+        //     headers: {'Authorization' : token}
+        // })
+        // const userData = await user.json()
+        // console.log("USER DATA BELOW")
+        // console.log(userData)
+        // setUsername(userData["username"])
     }
 
     useEffect(() => {
-        fetchData()
+        if (token) {
+            console.log(token)
+            fetchData()
+        }
     }, [])
 
     const checkoutHandle = async() => {
@@ -32,13 +44,12 @@ function Cart() {
                 method: 'POST',
                 headers: {
                     'Content-Type': "application/json",
-                    'Authorization' : token
+                    'Authorization' : `Bearer ${token}`
                 }
-                // Cara dapet tokennya gimana?
         })
     }
 
-    return data && (
+    return (data && token) ? (
         <div>
             <Head>
                 <title>Cart</title>
@@ -65,6 +76,8 @@ function Cart() {
                 </div>
             </div>
         </div>
+    ) : (
+        <SignIn/>
     )
   }
   

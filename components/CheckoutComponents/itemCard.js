@@ -2,13 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../styles/cart.module.css'
 import React, {useEffect, useState} from 'react';
+import { getJWt } from '../../util/localStorage';
+
 
 export default function itemCard({item}) {
     const [amount, setAmount] = useState(item.amount)
     const [isRender, setRender] = useState(true)
     const [totalPrice, setTotalPrice] = useState(item.total_price)
 
-    const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MzYsImV4cCI6MTY1MzU2NTYzNiwiaWF0IjoxNjUzNTYyMDM2fQ.1QUOEEPYgB8FlbPDNwm0pQpxThYDk_4hBxz9E4s2cXo"
+    const [token, _setToken] = useState(getJWt())
     const edit_amount = async(product_id, is_add) => {
 
         if (is_add) {
@@ -24,7 +26,7 @@ export default function itemCard({item}) {
                 body: JSON.stringify({"product_id": product_id, "is_add" : is_add}),
                 headers: {
                     'Content-Type': "application/json",
-                    'Authorization' : token
+                    'Authorization' : `Bearer ${token}`
                 }
                 // Cara dapet tokennya gimana?
         })
@@ -38,7 +40,7 @@ export default function itemCard({item}) {
                 body: JSON.stringify({"product_id": product_id}),
                 headers: {
                     'Content-Type': "application/json",
-                    'Authorization' : token
+                    'Authorization' : `Bearer ${token}`
                 }
                 // Cara dapet tokennya gimana?
         })
