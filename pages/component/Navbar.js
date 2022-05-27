@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { getJWt } from "../../util/localStorage";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [token, _setToken] = useState(getJWt())
+  const isLoggedIn = token
+  // TODO: show allowed routes based on isLoggedIn
     return(
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
   <div className="container">
@@ -31,15 +36,28 @@ const Navbar = () => {
           <a className="nav-link">Order</a>
           </Link>
         </li>
+        <li className="nav-item">
+          <Link href="/logs">
+          <a className="nav-link">Logs</a>
+          </Link>
+        </li>
       </ul>
 
       <div className="d-flex align-items-center">
-        <button type="button" className="btn btn-link px-3 me-2">
-          Login
-        </button>
-        <button type="button" className="btn btn-primary me-3">
-          Sign up for free
-        </button>
+        <Link href="/signin">
+          <a className="nav-link">
+            <button type="button" className="btn btn-link px-3 me-2">
+              Login
+            </button>
+          </a> 
+        </Link>
+        <Link href="/signup">
+          <a className="nav-link">
+            <button type="button" className="btn btn-primary me-3">
+              Sign up for free
+            </button>
+          </a> 
+        </Link>
       </div>
     </div>
   </div>
