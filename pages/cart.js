@@ -2,14 +2,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/cart.module.css'
 import ItemCard from '../components/CheckoutComponents/itemCard'
-
+import { getJWt } from '../util/localStorage'
 import React, {useEffect, useState} from 'react';
 
 
 function Cart() {
     const [data, setData] = useState()
     const [grandTotal, setGrandTotal] = useState(0)
-    const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MzYsImV4cCI6MTY1MzU2NTYzNiwiaWF0IjoxNjUzNTYyMDM2fQ.1QUOEEPYgB8FlbPDNwm0pQpxThYDk_4hBxz9E4s2cXo"
+    const [token, _setToken] = useState(getJWt())
 
     const fetchData = async() => {
         console.log("FETCHING DATA...")
@@ -18,11 +18,9 @@ function Cart() {
             headers: {'Authorization' : token}
             // Cara dapet tokennya gimana?
         })
-        console.log("RESULT")
         const result_data = await result.json()
-        console.log(result_data)
         setData(result_data)
-        // setGrandTotal(result_data.grand_total)
+        
     }
 
     useEffect(() => {
