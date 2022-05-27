@@ -24,15 +24,21 @@ const deleteProduct = (id) => {
   productClient
     .delete(`/${id}`)
     .then(function (res) {
-      if (res.status >= 300) {
-        alert(res.data.message);
-      }
+      alert("Product deleted");
       console.log(res);
 
       Router.reload(window.location.pathname);
     })
     .catch(function (error) {
-      console.error(error);
+      if (error.response) {
+        alert(error.response.data?.message);
+      } else if (error.request) {
+        console.log(error.request);
+        alert("Failed to send request");
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
     });
 };
 
@@ -42,14 +48,19 @@ export default function Home() {
     productClient
       .get("/")
       .then(function (res) {
-        if (res.status >= 300) {
-          alert(res.data.message);
-        }
         setProducts(res.data.products);
         console.log(res);
       })
       .catch(function (error) {
-        console.error(error);
+        if (error.response) {
+          alert(error.response.data?.message);
+        } else if (error.request) {
+          console.log(error.request);
+          alert("Failed to send request");
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
       });
   }, []);
 

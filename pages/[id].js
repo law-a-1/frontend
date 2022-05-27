@@ -39,14 +39,19 @@ export default function ProductDetail() {
     productClient
       .get(`/${id}`)
       .then(function (res) {
-        if (res.status >= 300) {
-          alert(res.data.message);
-        }
         setProduct(res.data);
         console.log(res);
       })
       .catch(function (error) {
-        console.error(error);
+        if (error.response) {
+          alert(error.response.data?.message);
+        } else if (error.request) {
+          console.log(error.request);
+          alert("Failed to send request");
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
       });
   }, [id]);
 
