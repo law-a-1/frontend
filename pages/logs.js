@@ -3,6 +3,8 @@ import { LogsAPI } from '../api/endpoints/logs'
 import { LogItem } from '../components/LogPage/LogItem'
 import { Pagination } from '../components/LogPage/Pagination'
 import { FilterForm } from '../components/LogPage/FilterForm'
+import { getJWt } from '../util/localStorage'
+import SignIn from './signin'
 
 export const Logs = () => {
   const [logs, setLogs] = useState()
@@ -10,6 +12,7 @@ export const Logs = () => {
     page: 1,
     page_size: 10
   })
+  const [token, _setToken] = useState(getJWt())
 
   const changePage = (pageNumber) => {
     setQuery({...query, page: pageNumber})
@@ -17,17 +20,19 @@ export const Logs = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const logs = await LogsAPI.getLogs(query)
+      const logs = await LogsAPI.getLogs(token, query)
       setLogs(logs)
     }
-    fetchData()
-  }, [query])
+    if (token) {
+      fetchData()
+    }
+  }, [token, query])
 
   const handleSubmit = (filters) => {
     setQuery({...query, ...filters})
   }
 
-  return logs && (
+  return (token && logs) ? (
     <div className='page-container'>
         <h1 className='page-header'>Logs</h1>
         <FilterForm handleSubmit={handleSubmit}/>
@@ -50,6 +55,8 @@ export const Logs = () => {
           <Pagination page={query.page} pages={logs.pages} changePage={changePage}/>
         </div>
     </div>
+  ) : (
+    <SignIn/>
   )
 }
 
