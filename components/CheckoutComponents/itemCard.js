@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import { getJWt } from '../../util/localStorage';
 
 
-export default function itemCard({item}) {
+export default function ItemCard({item}) {
     const [amount, setAmount] = useState(item.amount)
     const [isRender, setRender] = useState(true)
     const [totalPrice, setTotalPrice] = useState(item.total_price)

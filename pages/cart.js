@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/cart.module.css'
-import ItemCard from '../components/CheckoutComponents/itemCard'
+import ItemCard from '../components/CheckoutComponents/ItemCard'
 import { getJWt } from '../util/localStorage'
 import React, {useEffect, useState} from 'react';
 import SignIn from './signin'
@@ -62,7 +62,7 @@ function Cart() {
                     {
                         data.items?.map((item, index) => {
                             return (
-                                <ItemCard item={item} />
+                                <ItemCard item={item} key={{index}} />
                             )
                         })
                     }
