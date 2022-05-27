@@ -1,6 +1,7 @@
 import Head  from "next/head";
 import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router'
+import { saveJwt } from "../util/localStorage";
 
 export default function SignUp() {
     const router = useRouter()
@@ -52,7 +53,12 @@ export default function SignUp() {
         }).then((response) => {
             console.log(response)
             if(response.ok){ 
-                router.push('https://law-a-1.netlify.app/logout')
+                response.json().then(data => {
+                    if (data.jwt) {
+                        saveJwt(data.jwt)
+                    }
+                })
+                router.push('/')
             } else {
                 if(data.username.length<5){
                     alert("Username must contain atleast 5 characters")
