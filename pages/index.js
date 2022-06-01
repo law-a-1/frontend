@@ -4,63 +4,31 @@ import Link from "next/link";
 import Image from "next/image";
 import glassPic from "../public/glass.jpeg";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import Router from "next/router";
+import { getJWt } from "../util/localStorage";
+import { ProductAPI } from "../api/endpoints/product";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
   minimumFractionDigits: 0,
 });
 
-const productClient = axios.create({
-  baseURL: "http://localhost:8080/products",
-  headers: {
-    Authorization:
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjksImV4cCI6MTY1MzYzMTM2OCwiaWF0IjoxNjUzNjI3NzY4fQ.8EdyUGrBYtfBFbtJ5HbsRIOHh8dP460qNd4K2OUr52Y",
-  },
-});
-
-const deleteProduct = (id) => {
-  productClient
-    .delete(`/${id}`)
-    .then(function (res) {
-      alert("Product deleted");
-      console.log(res);
-
-      Router.reload(window.location.pathname);
-    })
-    .catch(function (error) {
-      if (error.response) {
-        alert(error.response.data?.message);
-      } else if (error.request) {
-        console.log(error.request);
-        alert("Failed to send request");
-      } else {
-        console.log("Error", error.message);
-      }
-      console.log(error.config);
-    });
+const deleteProduct = (token, id) => {
+  ProductAPI.deleteProduct(token, id).catch((err) =>
+    console.error(err.message)
+  );
 };
 
 export default function Home() {
+  const [token, _setToken] = useState(getJWt());
   const [products, setProducts] = useState([]);
+
   useEffect(() => {
-    productClient
-      .get("/")
-      .then(function (res) {
-        setProducts(res.data.products);
-        console.log(res);
+    ProductAPI.getProducts()
+      .then((res) => {
+        setProducts(res.products);
       })
-      .catch(function (error) {
-        if (error.response) {
-          alert(error.response.data?.message);
-        } else if (error.request) {
-          console.log(error.request);
-          alert("Failed to send request");
-        } else {
-          console.log("Error", error.message);
-        }
-        console.log(error.config);
+      .catch((err) => {
+        console.error(err.message);
       });
   }, []);
 
@@ -74,7 +42,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.grid}>
-          {products.map((product) => (
+          {products?.map((product) => (
             <div className={styles.card} key={product.id}>
               <Link href={`${product.id}`}>
                 <a>
@@ -88,17 +56,19 @@ export default function Home() {
                   <p>Rp{formatter.format(product.price)}</p>
                 </a>
               </Link>
-              <div className={styles.modify}>
-                <button>
-                  <Link href={"/update-product"}>
-                    <a>Update</a>
-                  </Link>
-                </button>
+              {token && (
+                <div className={styles.modify}>
+                  <button>
+                    <Link href={"/update-product"}>
+                      <a>Update</a>
+                    </Link>
+                  </button>
 
-                <button onClick={() => deleteProduct(product.id)}>
-                  Delete
-                </button>
-              </div>
+                  <button onClick={() => deleteProduct(token, product.id)}>
+                    Delete
+                  </button>
+                </div>
+              )}
             </div>
           ))}
 
