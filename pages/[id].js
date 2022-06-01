@@ -5,18 +5,11 @@ import glassPic from "../public/glass.jpeg";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { ProductAPI } from "../api/endpoints/product";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
   minimumFractionDigits: 0,
-});
-
-const productClient = axios.create({
-  baseURL: "http://localhost:8080/products",
-  headers: {
-    Authorization:
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjksImV4cCI6MTY1MzYyNDkzNywiaWF0IjoxNjUzNjIxMzM3fQ.bQ_Kc7D1WJgxsX5A3h7O2Y1aKWBIdf0dkVllDDlFGa4",
-  },
 });
 
 export default function ProductDetail() {
@@ -36,23 +29,9 @@ export default function ProductDetail() {
   };
 
   useEffect(() => {
-    productClient
-      .get(`/${id}`)
-      .then(function (res) {
-        setProduct(res.data);
-        console.log(res);
-      })
-      .catch(function (error) {
-        if (error.response) {
-          alert(error.response.data?.message);
-        } else if (error.request) {
-          console.log(error.request);
-          alert("Failed to send request");
-        } else {
-          console.log("Error", error.message);
-        }
-        console.log(error.config);
-      });
+    ProductAPI.getProduct(id)
+      .then((res) => setProduct(res))
+      .catch((err) => console.error(err.message));
   }, [id]);
 
   return (
