@@ -17,13 +17,25 @@ export default function ProductForm({ submitHandler }) {
   return (
     <form styles={styles.main} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formItem}>
-        <label htmlFor="images">Images:</label>
-        <input type="file" id="images" name="images" />
+        <label htmlFor="image">Image:</label>
+        <input
+          {...register("image")}
+          type="file"
+          accept="image/*"
+          id="image"
+          name="image"
+        />
       </div>
 
       <div className={styles.formItem}>
         <label htmlFor="video">Video:</label>
-        <input type="file" id="images" name="images" />
+        <input
+          {...register("video")}
+          type="file"
+          accept="video/*"
+          id="video"
+          name="video"
+        />
       </div>
 
       <div className={styles.formItem}>
