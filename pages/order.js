@@ -1,7 +1,49 @@
+import Head from 'next/head'
+import Image from 'next/image'
 import Link from "next/link";
+import { getJWt } from '../util/localStorage'
+import React, {useEffect, useState} from 'react'
+import SignIn from './signin'
 
 function OrderPage(){
-    return (
+
+  const [data, setData] = useState()
+  const [username, setUsername] = useState()
+  const [role, setRole] = useState()
+  const [grandTotal, setGrandTotal] = useState(0)
+  const [token, _setToken] = useState(getJWt())
+
+  const fetchData = async() => {
+      const user = await fetch('https://auth-law-a1.herokuapp.com/user', {
+          method: 'GET',
+          headers: {'Authorization' : token}
+      })
+      const userData = await user.json()
+      console.log("USER DATA BELOW")
+      console.log(userData)
+      setUsername(userData["username"])
+      setRole(userData["role"])
+
+      if (role) == 'admin':
+
+      console.log("FETCHING DATA...")
+      const result = await fetch('http://localhost:8000/orderservice/', {
+          method: 'GET',
+          headers: {'Authorization' : `Bearer ${token}`}
+      })
+      const result_data = await result.json()
+      setData(result_data)
+  }
+
+  useEffect(() => {
+    if (token) {
+        console.log(token)
+        fetchData()
+    }
+}, [])
+
+  
+  return (
         <main>
           <div className="container">
             <h1 classNameName="text-center">Order page</h1>
