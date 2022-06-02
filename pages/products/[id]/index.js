@@ -28,10 +28,12 @@ export default function ProductDetail() {
   };
 
   useEffect(() => {
+    if (!router.isReady) return;
+
     ProductAPI.getProduct(id)
       .then((res) => setProduct(res))
       .catch((err) => console.error(err.message));
-  }, [id]);
+  }, [router.isReady, id]);
 
   return (
     <div className={styles.container}>
