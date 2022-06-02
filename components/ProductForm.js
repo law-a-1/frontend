@@ -1,6 +1,8 @@
 import styles from "../styles/ProductForm.module.css";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { getJWt } from "../util/localStorage";
+import { useState } from "react";
 
 export default function ProductForm({ submitHandler }) {
   const {
@@ -8,12 +10,20 @@ export default function ProductForm({ submitHandler }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [token, _setToken] = useState(getJWt());
 
   const onSubmit = (data) => {
-    data.price = parseInt(data.price);
-    data.stock = parseInt(data.stock);
-    submitHandler(data);
+    const productData = new FormData();
+
+    productData.append("name", data.name);
+    productData.append("description", data.description);
+    productData.append("price", parseInt(data.price));
+    productData.append("stock", parseInt(data.stock));
+    productData.append("video", data.video);
+
+    submitHandler(token, productData);
   };
+
   return (
     <form styles={styles.main} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formItem}>
