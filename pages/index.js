@@ -44,7 +44,7 @@ export default function Home() {
         <div className={styles.grid}>
           {products?.map((product) => (
             <div className={styles.card} key={product.id}>
-              <Link href={`${product.id}`}>
+              <Link href={`/products/${product.id}`}>
                 <a>
                   <Image
                     src={glassPic}
@@ -59,8 +59,8 @@ export default function Home() {
               {token && (
                 <div className={styles.modify}>
                   <button>
-                    <Link href={"/update-product"}>
-                      <a>Update</a>
+                    <Link href={`/products/${product.id}/edit`}>
+                      <a>Edit</a>
                     </Link>
                   </button>
 
@@ -72,11 +72,13 @@ export default function Home() {
             </div>
           ))}
 
-          <div className={styles.card} style={{ textAlign: "center" }}>
-            <Link href="/add-product">
-              <a>Add product</a>
-            </Link>
-          </div>
+          {token && (
+            <div className={styles.card} style={{ textAlign: "center" }}>
+              <Link href="/products/add">
+                <a>Add product</a>
+              </Link>
+            </div>
+          )}
         </div>
       </main>
     </div>
