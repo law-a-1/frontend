@@ -4,22 +4,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { getJWt } from "../../../util/localStorage";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
-const onSubmit = (data) => {
-  const productData = new FormData();
-
-  productData.append("name", data.name);
-  productData.append("description", data.description);
-  productData.append("price", parseInt(data.price));
-  productData.append("stock", parseInt(data.stock));
-  productData.append("video", data.video);
-
-  ProductAPI.updateProduct(getJWt, id, productData);
-
-  submitHandler(token, productData);
-};
+import { useEffect } from "react";
 
 export default function UpdateProduct() {
   const router = useRouter();
@@ -47,6 +33,18 @@ export default function UpdateProduct() {
       })
       .catch((err) => console.error(err.message));
   }, [router.isReady, id, reset]);
+
+  const onSubmit = (data) => {
+    const productData = new FormData();
+
+    productData.append("name", data.name);
+    productData.append("description", data.description);
+    productData.append("price", parseInt(data.price));
+    productData.append("stock", parseInt(data.stock));
+    productData.append("video", data.video);
+
+    ProductAPI.updateProduct(getJWt(), id, productData);
+  };
 
   return (
     <div className={styles.container}>
