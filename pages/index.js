@@ -3,13 +3,35 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import glassPic from "../public/glass.jpeg";
+import { useState, useEffect } from "react";
+import { getJWt } from "../util/localStorage";
+import { ProductAPI } from "../api/endpoints/product";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
   minimumFractionDigits: 0,
 });
 
+const deleteProduct = (token, id) => {
+  ProductAPI.deleteProduct(token, id).catch((err) =>
+    console.error(err.message)
+  );
+};
+
 export default function Home() {
+  const [token, _setToken] = useState(getJWt());
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    ProductAPI.getProducts()
+      .then((res) => {
+        setProducts(res.products);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,37 +42,43 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.grid}>
-          {[1, 2, 3, 4, 5, 6].map((e) => (
-            <div className={styles.card} key={e}>
-              <Link href={`${e}`}>
+          {products?.map((product) => (
+            <div className={styles.card} key={product.id}>
+              <Link href={`/products/${product.id}`}>
                 <a>
                   <Image
                     src={glassPic}
-                    alt="Gambar dari Gelas Ajaib"
+                    alt={`Gambar dari {product.name}`}
                     width={300}
                     height={300}
                   />
-                  <h2>Gelas Ajaib</h2>
-                  <p>Rp{formatter.format(999999999)}</p>
+                  <h2>{product.name}</h2>
+                  <p>Rp{formatter.format(product.price)}</p>
                 </a>
               </Link>
-              <div className={styles.modify}>
-                <button>
-                  <Link href={"/update-product"}>
-                    <a>Update</a>
-                  </Link>
-                </button>
+              {token && (
+                <div className={styles.modify}>
+                  <button>
+                    <Link href={`/products/${product.id}/edit`}>
+                      <a>Edit</a>
+                    </Link>
+                  </button>
 
-                <button>Delete</button>
-              </div>
+                  <button onClick={() => deleteProduct(token, product.id)}>
+                    Delete
+                  </button>
+                </div>
+              )}
             </div>
           ))}
 
-          <div className={styles.card} style={{ textAlign: "center" }}>
-            <Link href="/add-product">
-              <a>Add product</a>
-            </Link>
-          </div>
+          {token && (
+            <div className={styles.card} style={{ textAlign: "center" }}>
+              <Link href="/products/add">
+                <a>Add product</a>
+              </Link>
+            </div>
+          )}
         </div>
       </main>
     </div>
