@@ -1,8 +1,10 @@
 import Head from "next/head";
-import styles from "../styles/ProductDetail.module.css";
+import styles from "../../../styles/ProductDetail.module.css";
 import Image from "next/image";
-import glassPic from "../public/glass.jpeg";
-import { useState } from "react";
+import glassPic from "../../../public/glass.jpeg";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { ProductAPI } from "../../../api/endpoints/product";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
@@ -10,6 +12,10 @@ const formatter = new Intl.NumberFormat("id-ID", {
 });
 
 export default function ProductDetail() {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [product, setProduct] = useState({});
   const [productNumber, setProductNumber] = useState(0);
   const [subtotal, setSubtotal] = useState(1000);
 
@@ -21,10 +27,18 @@ export default function ProductDetail() {
     }
   };
 
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    ProductAPI.getProduct(id)
+      .then((res) => setProduct(res))
+      .catch((err) => console.error(err.message));
+  }, [router.isReady, id]);
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Gelas Ajaib</title>
+        <title>{product.name}</title>
         <meta
           name="description"
           content="Gelas ajaib buatan Jin dari Barat Daya"
@@ -48,10 +62,10 @@ export default function ProductDetail() {
         </div>
 
         <div className={styles.middle}>
-          <h2>Gelas ajaib</h2>
-          <p>Rp{formatter.format(999999999)}</p>
+          <h2>{product.name}</h2>
+          <p>Rp{formatter.format(product.price)}</p>
 
-          <p>Gelas ajaib buatan Jin dari Barat Daya</p>
+          <p>{product.description}</p>
         </div>
 
         <div className={styles.right}>
@@ -61,7 +75,7 @@ export default function ProductDetail() {
               <p>{productNumber}</p>
               <button onClick={() => changeProductNumber("increase")}>+</button>
             </div>
-            <p>Stock: 25</p>
+            <p>Stock: {product.stock}</p>
           </div>
 
           <div className={styles.subtotal}>
