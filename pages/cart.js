@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/cart.module.css'
-import ItemCard from '../components/CheckoutComponents/ItemCard'
+import ItemCard from '../components/CheckoutComponents/ItemCard.js'
 import { getJWt } from '../util/localStorage'
 import React, {useEffect, useState} from 'react';
 import SignIn from './signin'
