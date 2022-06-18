@@ -15,7 +15,7 @@ function Cart() {
 
     const fetchData = async() => {
         console.log("FETCHING DATA...")
-        const result = await fetch('http://localhost:8000/checkout/cart/', {
+        const result = await fetch('http://34.67.62.183:8000/checkout/cart/', {
             method: 'GET',
             headers: {'Authorization' : `Bearer ${token}`}
         })
@@ -40,7 +40,7 @@ function Cart() {
     }, [])
 
     const checkoutHandle = async() => {
-        await fetch('http://localhost:8000/checkout/', {
+        await fetch('http://34.67.62.183:8000/checkout/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': "application/json",

@@ -21,7 +21,7 @@ export default function ItemCard({item}) {
             setTotalPrice(totalPrice-item.product.price)
         }
 
-        await fetch('http://localhost:8000/checkout/cart/', {
+        await fetch('http://34.67.62.183:8000/checkout/cart/', {
                 method: 'PUT',
                 body: JSON.stringify({"product_id": product_id, "is_add" : is_add}),
                 headers: {
@@ -35,7 +35,7 @@ export default function ItemCard({item}) {
 
     const delete_item = async(product_id) => {
 
-        await fetch('http://localhost:8000/checkout/cart/', {
+        await fetch('http://34.67.62.183:8000/checkout/cart/', {
                 method: 'DELETE',
                 body: JSON.stringify({"product_id": product_id}),
                 headers: {
