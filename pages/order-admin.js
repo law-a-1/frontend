@@ -2,7 +2,7 @@ import { getJWt } from '../util/localStorage'
 import React, {useEffect, useState} from 'react'
 import { OrderAPI } from "../api/endpoints/order";
 
-export default function Order(){
+export default function OrderAdmin(){
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     OrderAPI.getOrder(getJWt())
@@ -33,10 +33,13 @@ export default function Order(){
                     <p>Status : <b>{order.order_status}</b></p>
                     <p>Change Status</p>
                     <div className="btn-group" role="group" aria-label="Basic outlined example">
-                      <button type="button" onClick={() => OrderAPI.updateProductRecieved(getJWt(),order.order_id)} className="btn btn-outline-primary">Recieved</button>
+                      <button type="button" onClick={() => OrderAPI.updateProductWait(getJWt(),order.order_id)} className="btn btn-outline-primary">Wait</button>
+                      <button type="button" onClick={() => OrderAPI.updateProductSend(getJWt(),order.order_id)} className="btn btn-outline-primary">Send</button>
+                      <button type="button" onClick={() => OrderAPI.updateProductReject(getJWt(),order.order_id)} className="btn btn-outline-primary">Reject</button>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           ))}
@@ -44,3 +47,4 @@ export default function Order(){
     </main>
   )
 };
+
