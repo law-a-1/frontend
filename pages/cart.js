@@ -47,6 +47,7 @@ function Cart() {
                     'Authorization' : `Bearer ${token}`
                 }
         })
+        location.reload()
     }
 
     return (data && token) ? (
