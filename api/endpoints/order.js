@@ -1,4 +1,4 @@
-const BASE_URL = "http://34.136.2.52"
+const BASE_URL = "http://34.136.2.52:4915"
 export const OrderAPI = {
     /**
      * API method to get all products
