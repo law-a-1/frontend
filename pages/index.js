@@ -2,10 +2,8 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import glassPic from "../public/glass.jpeg";
-import { useState, useEffect } from "react";
-import { getJWt } from "../util/localStorage";
-import { ProductAPI } from "../api/endpoints/product";
+import {useEffect, useState} from "react";
+import {ProductAPI} from "../api/endpoints/product";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
@@ -19,18 +17,26 @@ const deleteProduct = (token, id) => {
 };
 
 export default function Home() {
-  const [token, _setToken] = useState(getJWt());
+  const [token, setToken] = useState("");
   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setToken(token);
+    }
+  }, []);
 
   useEffect(() => {
     ProductAPI.getProducts()
       .then((res) => {
-        setProducts(res.products);
+        console.log(res)
+        setProducts(res.data.products);
       })
       .catch((err) => {
         console.error(err.message);
       });
-  }, []);
+  }, [token]);
 
   return (
     <div className={styles.container}>
@@ -45,16 +51,16 @@ export default function Home() {
           {products?.map((product) => (
             <div className={styles.card} key={product.id}>
               <Link href={`/products/${product.id}`}>
-                <a>
+                <button>
                   <Image
-                    src={glassPic}
-                    alt={`Gambar dari {product.name}`}
+                    src={product ? "/no-image.jpeg" : product.image}
+                    alt={`Gambar dari ${product.name}`}
                     width={300}
                     height={300}
                   />
                   <h2>{product.name}</h2>
                   <p>Rp{formatter.format(product.price)}</p>
-                </a>
+                </button>
               </Link>
               {token && (
                 <div className={styles.modify}>
@@ -75,7 +81,7 @@ export default function Home() {
           {token && (
             <div className={styles.card} style={{ textAlign: "center" }}>
               <Link href="/products/add">
-                <a>Add product</a>
+                <p>Add product</p>
               </Link>
             </div>
           )}

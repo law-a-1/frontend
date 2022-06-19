@@ -2,10 +2,20 @@ import Head from "next/head";
 import styles from "../../styles/ProductForm.module.css";
 import { ProductAPI } from "../../api/endpoints/product";
 import Link from "next/link";
-import { getJWt } from "../../util/localStorage";
 import { useForm } from "react-hook-form";
+import SignIn from "../signin";
+import {useEffect, useState} from "react";
 
 export default function AddProduct() {
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -25,14 +35,18 @@ export default function AddProduct() {
     productData.append("description", data.description);
     productData.append("price", parseInt(data.price));
     productData.append("stock", parseInt(data.stock));
+    productData.append("image", data.image);
     productData.append("video", data.video);
 
-    ProductAPI.createProduct(getJWt(), productData)
+    ProductAPI.createProduct(token, productData)
       .then((res) => reset())
-      .catch((err) => console.error(err.message));
+      .catch((err) => {
+        console.error(err)
+        alert(err.response.data?.message ?? err.message)
+      });
   };
 
-  return (
+  return token ? (
     <div className={styles.container}>
       <Head>
         <title>Add Product</title>
@@ -123,5 +137,5 @@ export default function AddProduct() {
         </form>
       </main>
     </div>
-  );
+  ) : <SignIn />;
 }

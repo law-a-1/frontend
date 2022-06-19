@@ -1,4 +1,6 @@
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_UR_PRODUCT_SERVICE;
+import axios from "axios";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_PRODUCT_SERVICE;
 
 export const ProductAPI = {
   /**
@@ -7,21 +9,11 @@ export const ProductAPI = {
    * @returns List of products
    */
   getProducts: async () => {
-    try {
-      const res = await fetch(`${BASE_URL}/products`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!res.ok) {
-        return res.text().then((msg) => {
-          throw new Error(msg);
-        });
-      }
-      return res.json();
-    } catch (err) {
-      console.error(err);
-    }
+    return axios.get(`${BASE_URL}/products`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
   },
 
   /**
@@ -31,26 +23,11 @@ export const ProductAPI = {
    * @returns Product with given ID
    */
   getProduct: async (id) => {
-    try {
-      const res = await fetch(`${BASE_URL}/products/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!res.ok) {
-        return res.json();
-      }
-
-      if (!res.ok) {
-        return res.text().then((msg) => {
-          throw new Error(msg);
-        });
-      }
-
-      return await res.json();
-    } catch (error) {
-      console.error(error);
-    }
+    return axios.get(`${BASE_URL}/products/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
   },
 
   /**
@@ -59,24 +36,38 @@ export const ProductAPI = {
    * @param {string} token JWT Token
    * @param {FormData} product Product form data
    */
-  createProduct: async (token, product) => {
-    try {
-      const res = await fetch(`${BASE_URL}/products`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: product,
-      });
-
-      if (!res.ok) {
-        return res.text().then((msg) => {
-          throw new Error(msg);
-        });
+  createProduct:  (token, product) => {
+    return axios.post(`${BASE_URL}/products`, product, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress: (p) => {
+        console.log(p);
+        let percentCompleted = Math.round( (p.loaded * 100) / p.total );
+        //this.setState({
+        //fileprogress: p.loaded / p.total
+        //})
       }
-    } catch (error) {
-      console.error(error);
-    }
+    })
+    // try {
+    //   const res = await fetch(`${BASE_URL}/products`, {
+    //     method: "POST",
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //     body: product,
+    //   });
+    //
+    //   if (!res.ok) {
+    //     return res.text().then((msg) => {
+    //       throw new Error(msg);
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   },
 
   /**
@@ -86,24 +77,38 @@ export const ProductAPI = {
    * @param {string} id Product ID
    * @param {FormData} product Product data
    */
-  updateProduct: async (token, id, product) => {
-    try {
-      const res = await fetch(`${BASE_URL}/products/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: product,
-      });
-
-      if (!res.ok) {
-        return res.text().then((msg) => {
-          throw new Error(msg);
-        });
+  updateProduct: (token, id, product) => {
+    return axios.post(`${BASE_URL}/products/${id}`, product, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress: (p) => {
+        console.log(p);
+        let percentCompleted = Math.round( (p.loaded * 100) / p.total );
+        //this.setState({
+        //fileprogress: p.loaded / p.total
+        //})
       }
-    } catch (error) {
-      console.error(error);
-    }
+    })
+    // try {
+    //   const res = await fetch(`${BASE_URL}/products/${id}`, {
+    //     method: "PUT",
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //     body: product,
+    //   });
+    //
+    //   if (!res.ok) {
+    //     return res.text().then((msg) => {
+    //       throw new Error(msg);
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   },
 
   /**

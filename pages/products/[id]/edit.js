@@ -5,11 +5,21 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { getJWt } from "../../../util/localStorage";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
+import SignIn from "../../signin";
 
 export default function UpdateProduct() {
   const router = useRouter();
   const { id } = router.query;
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -41,12 +51,16 @@ export default function UpdateProduct() {
     productData.append("description", data.description);
     productData.append("price", parseInt(data.price));
     productData.append("stock", parseInt(data.stock));
+    productData.append("image", data.image);
     productData.append("video", data.video);
 
-    ProductAPI.updateProduct(getJWt(), id, productData);
+    // ProductAPI.updateProduct(getJWt(), id, productData);
+    ProductAPI.updateProduct(token, id, productData)
+      .then((res) => reset())
+      .catch((err) => console.error(err.message));
   };
 
-  return (
+  return token ? (
     <div className={styles.container}>
       <Head>
         <title>Update Product</title>
@@ -144,5 +158,5 @@ export default function UpdateProduct() {
         </form>
       </main>
     </div>
-  );
+  ) : <SignIn />;
 }

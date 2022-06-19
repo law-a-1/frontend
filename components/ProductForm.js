@@ -21,6 +21,62 @@ export default function ProductForm({ submitHandler }) {
     productData.append("stock", parseInt(data.stock));
     productData.append("video", data.video);
 
+    const CHUNK_SIZE = 5000;
+    const imageReader = new FileReader();
+    const videoReader = new FileReader();
+
+    const image = data.image[0];
+    imageReader.onload = async (ev) => {
+      const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
+
+      const fileName = Math.random() * 1000 + image.name;
+      for (let chunkId = 0; chunkId < chunkCount + 1; chunkId++) {
+        const chunk = ev.target.result.slice(
+          chunkId * CHUNK_SIZE,
+          chunkId * CHUNK_SIZE + CHUNK_SIZE
+        );
+        // await fetch("http://localhost:8080/products/upload", {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/octet-stream",
+        //     "content-length": chunk.length,
+        //     "file-name": fileName,
+        //   },
+        //   body: chunk,
+        // });
+        // divOutput.textContent = Math.round((chunkId * 100) / chunkCount, 0) + "%";
+        // console.log(Math.round((chunkId * 100) / chunkCount, 0) + "%");
+      }
+      // console.log(ev.target.result.byteLength);
+    };
+    // imageReader.readAsArrayBuffer(image);
+
+    const video = data.video[0];
+    videoReader.onload = async (ev) => {
+      const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
+
+      const fileName = Math.random() * 1000 + video.name;
+      for (let chunkId = 0; chunkId < chunkCount + 1; chunkId++) {
+        const chunk = ev.target.result.slice(
+          chunkId * CHUNK_SIZE,
+          chunkId * CHUNK_SIZE + CHUNK_SIZE
+        );
+        // await fetch("http://localhost:8080/products/upload", {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/octet-stream",
+        //     "content-length": chunk.length,
+        //     "file-name": fileName,
+        //   },
+        //   body: chunk,
+        // });
+        // divOutput.textContent = Math.round((chunkId * 100) / chunkCount, 0) + "%";
+        // console.log(Math.round((chunkId * 100) / chunkCount, 0) + "%");
+      }
+      // console.log(ev.target.result.byteLength);
+    };
+    // videoReader.readAsArrayBuffer(video);
+
     submitHandler(token, productData);
   };
 
