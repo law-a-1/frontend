@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import Head  from "next/head";
+import React, { useEffect, useState } from 'react';
+import Head from "next/head";
 import { useRouter } from 'next/router'
+import { removeJwt } from '../util/localStorage';
 
 export default function SignIn() {
     const router = useRouter()
@@ -10,19 +11,20 @@ export default function SignIn() {
         e.preventDefault();
 
         const response = await fetch('https://auth-law-a1.herokuapp.com/logout', {
-          method: 'POST',
-          credentials : 'include',
-          headers: {'Content-Type': 'application/json'},
-      
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+
         }).then((response) => {
             console.log(response)
-            if(response.ok){ 
+            if (response.ok) {
+                removeJwt();
                 router.push('/signin')
-            } 
-            else { 
+            }
+            else {
                 response.json().then(data => alert(data.message))
             }
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert(error)
         })
     };
@@ -36,9 +38,9 @@ export default function SignIn() {
 
             <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
                 <div className="bg-white rounded-2xl shadow-2xl flex max-w-4xl">
-                    <div className="p-10"> 
+                    <div className="p-10">
                         <div className="py-10">
-                            <h2 className="text-3xl font-bold text-black-500 mb-2">Hello!</h2>
+                            <h2 className="text-3xl font-bold text-black-500 mb-2">Goodbye!</h2>
                             <div className="border-2 w-10 border-black-500 inline-block mb-2"></div>
                         </div>
                         <div>
