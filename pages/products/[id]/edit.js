@@ -3,7 +3,6 @@ import { ProductAPI } from "../../../api/endpoints/product";
 import Head from "next/head";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { getJWt } from "../../../util/localStorage";
 import { useRouter } from "next/router";
 import {useEffect, useState} from "react";
 import SignIn from "../../signin";
@@ -39,7 +38,7 @@ export default function UpdateProduct() {
 
     ProductAPI.getProduct(id)
       .then((res) => {
-        reset(res);
+        reset(res.data);
       })
       .catch((err) => console.error(err.message));
   }, [router.isReady, id, reset]);
@@ -54,7 +53,6 @@ export default function UpdateProduct() {
     productData.append("image", data.image);
     productData.append("video", data.video);
 
-    // ProductAPI.updateProduct(getJWt(), id, productData);
     ProductAPI.updateProduct(token, id, productData)
       .then((res) => reset())
       .catch((err) => console.error(err.message));
