@@ -45,29 +45,8 @@ export const ProductAPI = {
       onUploadProgress: (p) => {
         console.log(p);
         let percentCompleted = Math.round( (p.loaded * 100) / p.total );
-        //this.setState({
-        //fileprogress: p.loaded / p.total
-        //})
       }
     })
-    // try {
-    //   const res = await fetch(`${BASE_URL}/products`, {
-    //     method: "POST",
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //     body: product,
-    //   });
-    //
-    //   if (!res.ok) {
-    //     return res.text().then((msg) => {
-    //       throw new Error(msg);
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
   },
 
   /**
@@ -78,7 +57,7 @@ export const ProductAPI = {
    * @param {FormData} product Product data
    */
   updateProduct: (token, id, product) => {
-    return axios.post(`${BASE_URL}/products/${id}`, product, {
+    return axios.put(`${BASE_URL}/products/${id}`, product, {
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -86,29 +65,8 @@ export const ProductAPI = {
       onUploadProgress: (p) => {
         console.log(p);
         let percentCompleted = Math.round( (p.loaded * 100) / p.total );
-        //this.setState({
-        //fileprogress: p.loaded / p.total
-        //})
       }
     })
-    // try {
-    //   const res = await fetch(`${BASE_URL}/products/${id}`, {
-    //     method: "PUT",
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //     body: product,
-    //   });
-    //
-    //   if (!res.ok) {
-    //     return res.text().then((msg) => {
-    //       throw new Error(msg);
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
   },
 
   /**
