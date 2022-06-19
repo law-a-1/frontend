@@ -4,7 +4,6 @@ import { LogItem } from '../components/LogPage/LogItem'
 import { Pagination } from '../components/LogPage/Pagination'
 import { FilterForm } from '../components/LogPage/FilterForm'
 import { getJWt } from '../util/localStorage'
-import SignIn from './signin'
 
 export const Logs = () => {
   const [logs, setLogs] = useState()
@@ -56,7 +55,9 @@ export const Logs = () => {
         </div>
     </div>
   ) : (
-    <SignIn/>
+    <div className='page-container'> 
+      Fetching data ...
+    </div>
   )
 }
 

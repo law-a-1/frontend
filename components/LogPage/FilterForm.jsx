@@ -10,6 +10,7 @@ export const FilterForm = ({ handleSubmit }) => {
     e.preventDefault()
 
     const filters = {
+      page: 1,
       time_start: startTime,
       time_end: endTime,
       type: level,
