@@ -13,7 +13,7 @@ export const ProductAPI = {
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
   },
 
   /**
@@ -27,7 +27,7 @@ export const ProductAPI = {
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
   },
 
   /**
@@ -36,17 +36,16 @@ export const ProductAPI = {
    * @param {string} token JWT Token
    * @param {FormData} product Product form data
    */
-  createProduct:  (token, product) => {
+  createProduct: (token, product, setPercentage) => {
     return axios.post(`${BASE_URL}/products`, product, {
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
       onUploadProgress: (p) => {
-        console.log(p);
-        let percentCompleted = Math.round( (p.loaded * 100) / p.total );
-      }
-    })
+        setPercentage(`${Math.round((p.loaded * 100) / p.total)}`);
+      },
+    });
   },
 
   /**
@@ -56,17 +55,16 @@ export const ProductAPI = {
    * @param {string} id Product ID
    * @param {FormData} product Product data
    */
-  updateProduct: (token, id, product) => {
+  updateProduct: (token, id, product, setPercentage) => {
     return axios.put(`${BASE_URL}/products/${id}`, product, {
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
       onUploadProgress: (p) => {
-        console.log(p);
-        let percentCompleted = Math.round( (p.loaded * 100) / p.total );
-      }
-    })
+        setPercentage(`${Math.round((p.loaded * 100) / p.total)}%`);
+      },
+    });
   },
 
   /**
@@ -76,22 +74,10 @@ export const ProductAPI = {
    * @param {string} id Product ID
    */
   deleteProduct: async (token, id) => {
-    try {
-      const res = await fetch(`${BASE_URL}/products/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        return res.text().then((msg) => {
-          throw new Error(msg);
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    return axios.delete(`${BASE_URL}/products/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };
