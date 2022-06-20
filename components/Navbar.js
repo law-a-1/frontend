@@ -1,13 +1,18 @@
 import Link from "next/link";
-import { getJWt } from "../../util/localStorage";
-import { useState } from "react";
+import { getJWt } from "../util/localStorage";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const [token, _setToken] = useState(getJWt())
-  const isLoggedIn = token
+  const [token, setToken] = useState("");
 
-  // TODO: show allowed routes based on isLoggedIn
-  return (token != null) ? (
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  return token ? (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Link href="/">
@@ -47,9 +52,7 @@ const Navbar = () => {
           <div className="d-flex align-items-center">
             <Link href="/logout">
               <a className="nav-link">
-                <button type="button" className="btn btn-primary me-3">
-                  Sign Out
-                </button>
+                Sign Out
               </a>
             </Link>
           </div>
@@ -96,16 +99,12 @@ const Navbar = () => {
           <div className="d-flex align-items-center">
             <Link href="/signin">
               <a className="nav-link">
-                <button type="button" className="btn btn-link px-3 me-2">
-                  Login
-                </button>
+                Login
               </a>
             </Link>
             <Link href="/signup">
               <a className="nav-link">
-                <button type="button" className="btn btn-primary me-3">
-                  Sign up for free
-                </button>
+                Sign up for free
               </a>
             </Link>
           </div>
