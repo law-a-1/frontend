@@ -4,13 +4,14 @@ import { ProductAPI } from "../../api/endpoints/product";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import SignIn from "../signin";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 export default function AddProduct() {
   const [token, setToken] = useState("");
+  const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
     }
@@ -35,15 +36,19 @@ export default function AddProduct() {
     productData.append("description", data.description);
     productData.append("price", parseInt(data.price));
     productData.append("stock", parseInt(data.stock));
-    productData.append("image", data.image);
-    productData.append("video", data.video);
+    productData.append("image", data.image[0]);
+    productData.append("video", data.video[0]);
 
-    ProductAPI.createProduct(token, productData)
-      .then((res) => reset())
+    ProductAPI.createProduct(token, productData, setPercentage)
+      .then(() => {
+        alert("Success!");
+        reset();
+      })
       .catch((err) => {
-        console.error(err)
-        alert(err.response.data?.message ?? err.message)
-      });
+        console.error(err);
+        alert(err.response.data?.message ?? err.message);
+      })
+      .finally(setPercentage(0));
   };
 
   return token ? (
@@ -135,7 +140,10 @@ export default function AddProduct() {
             <button type="submit">Submit</button>
           </div>
         </form>
+        {percentage != 0 && <p>Uploading {percentage}%</p>}
       </main>
     </div>
-  ) : <SignIn />;
+  ) : (
+    <SignIn />
+  );
 }

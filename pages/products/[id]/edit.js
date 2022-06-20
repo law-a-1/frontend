@@ -4,16 +4,17 @@ import Head from "next/head";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import SignIn from "../../signin";
 
 export default function UpdateProduct() {
   const router = useRouter();
   const { id } = router.query;
   const [token, setToken] = useState("");
+  const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
     }
@@ -53,9 +54,16 @@ export default function UpdateProduct() {
     productData.append("image", data.image);
     productData.append("video", data.video);
 
-    ProductAPI.updateProduct(token, id, productData)
-      .then((res) => reset())
-      .catch((err) => console.error(err.message));
+    ProductAPI.updateProduct(token, id, productData, setPercentage)
+      .then(() => {
+        alert("Success!");
+        reset();
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(err.response.data?.message ?? err.message);
+      })
+      .finally(setPercentage(0));
   };
 
   return token ? (
@@ -154,7 +162,10 @@ export default function UpdateProduct() {
             <button type="submit">Submit</button>
           </div>
         </form>
+        {percentage != 0 && <p>Uploading {percentage}%</p>}
       </main>
     </div>
-  ) : <SignIn />;
+  ) : (
+    <SignIn />
+  );
 }
