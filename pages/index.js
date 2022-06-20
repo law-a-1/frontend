@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ProductAPI } from "../api/endpoints/product";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const formatter = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
@@ -20,6 +20,7 @@ const deleteProduct = (token, id) => {
 export default function Home() {
   const [token, setToken] = useState("");
   const [products, setProducts] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -53,7 +54,7 @@ export default function Home() {
               className={styles.card}
               key={product.id}
               onClick={() => {
-                Router.push(`/products/${product.id}`);
+                router.push(`/products/${product.id}`);
               }}
             >
               <Image
